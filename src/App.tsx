@@ -2,8 +2,22 @@ import { useState } from "react"
 import { MatchCard } from "./MatchCard"
 
 function App() {
-  const [countCards, setCountCards] = useState(16)
+  /**
+   * TODO
+   * - define deck(s) of cards
+   * - init cards in pairs
+   * - track revealed cards
+   *  - only allow 2 cards revealed at a time
+   *  - check if 2 revealed are match
+   *    - remove cards and add to "score" (probably just a count of pairs)
+   * - end game when all removed
+   * - enable restart w/ new sort order
+   * - add multiplayer (turns, scores)
+   * - generate decks
+   * - allow setting card count
+   */
 
+  const countCards = 16
   const cards = []
 
   for (let i = 0; i < countCards; i++) {
