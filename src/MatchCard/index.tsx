@@ -1,24 +1,21 @@
-import { useState } from "react"
+import { cardData } from "../cardData"
 import { Front } from "./Front"
 
 export type MatchCardProps = {
-  icon: string
-  color: string
+  card: cardData
+  onChange: (revealed: boolean, card: cardData) => void
 }
 
-export const MatchCard = (props: MatchCardProps) => {
-  const { icon, color } = props
-  const [isRevealed, setIsRevealed] = useState(false)
-
+export const MatchCard = ({ card, onChange }: MatchCardProps) => {
   return (
     <div
-      className="h-56 w-44 cursor-pointer overflow-clip rounded-lg border-2 border-red-600"
-      onClick={() => setIsRevealed(!isRevealed)}
+      className="h-56 w-44 cursor-pointer overflow-clip rounded-lg border-2 border-stone-600"
+      onClick={() => onChange(card)}
     >
-      {isRevealed ?
+      {card.status === "faceUp" ?
         <Front
-          icon={icon}
-          color={color}
+          icon={card.icon}
+          color={card.color}
         />
       : <div className="flex h-full w-full flex-col items-center justify-center bg-red-400">
           <i className="fa-solid fa-star rounded-full border-2 border-red-500 p-2 text-6xl text-red-500" />

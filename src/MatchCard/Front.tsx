@@ -1,7 +1,11 @@
 import clsx from "clsx"
-import { MatchCardProps } from "."
 
-export const Front = (props: MatchCardProps) => {
+type cardDisplayProps = {
+  icon: string
+  color: string
+}
+
+export const Front = (props: cardDisplayProps) => {
   const { icon, color } = props
 
   return (

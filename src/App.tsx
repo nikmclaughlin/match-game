@@ -1,15 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MatchCard } from "./MatchCard"
+import { cardData, deckOfCards } from "./cardData"
 
 function App() {
   /**
    * TODO
-   * - define deck(s) of cards
-   * - init cards in pairs
-   * - track revealed cards
-   *  - only allow 2 cards revealed at a time
-   *  - check if 2 revealed are match
-   *    - remove cards and add to "score" (probably just a count of pairs)
+   * - add to "score" (probably just a count of pairs)
+   * - animate/slow down reveal results
    * - end game when all removed
    * - enable restart w/ new sort order
    * - add multiplayer (turns, scores)
@@ -17,18 +14,45 @@ function App() {
    * - allow setting card count
    */
 
-  const countCards = 16
-  const cards = []
+  const [cardsStore, setCardsStore] = useState<cardData[]>(deckOfCards)
 
-  for (let i = 0; i < countCards; i++) {
-    cards.push(
-      <MatchCard
-        key={i}
-        icon="fa-circle"
-        color="text-blue-400"
-      />,
-    )
+  const trackCards = (card: cardData) => {
+    if (card.status === "faceDown") {
+      console.log("found a " + card.name)
+      const nextCardStore = cardsStore.map((c) => {
+        if (c.id === card.id) {
+          c.status = "faceUp"
+        }
+        return c
+      })
+      setCardsStore(nextCardStore)
+    } else {
+      console.log("hiding " + card.name)
+      const nextCardStore = cardsStore.map((c) => {
+        if (c.id === card.id) {
+          c.status = "faceDown"
+        }
+        return c
+      })
+      setCardsStore(nextCardStore)
+      // setRevealedCards(revealedCards.filter((a) => a !== card.name))
+    }
   }
+
+  useEffect(() => {
+    const faceUpCards = cardsStore.filter((card) => card.status === "faceUp")
+    if (
+      faceUpCards.length === 2 &&
+      faceUpCards[0].name === faceUpCards[1].name
+    ) {
+      console.log("you got a match!")
+      //TODO: add to score
+      setCardsStore(() => cardsStore.filter((card) => card.status !== "faceUp"))
+    } else if (faceUpCards.length === 2) {
+      // no match - return to face down
+      setCardsStore(cardsStore.map((card) => ({ ...card, status: "faceDown" })))
+    }
+  }, [cardsStore])
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
@@ -37,7 +61,15 @@ function App() {
         <div>MATCH!</div>
       </h1>
       <div className="flex w-full max-w-4xl flex-wrap justify-center gap-4">
-        {cards}
+        {cardsStore.map((card, idx) => {
+          return (
+            <MatchCard
+              key={idx}
+              card={card}
+              onChange={trackCards}
+            />
+          )
+        })}
       </div>
     </div>
   )
