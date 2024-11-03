@@ -3,7 +3,7 @@ import { Front } from "./Front"
 
 export type MatchCardProps = {
   card: cardData
-  onChange: (revealed: boolean, card: cardData) => void
+  onChange: (card: cardData) => void
 }
 
 export const MatchCard = ({ card, onChange }: MatchCardProps) => {
