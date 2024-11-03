@@ -5,7 +5,6 @@ import { cardData, deckOfCards } from "./cardData"
 function App() {
   /**
    * TODO
-   * - add to "score" (probably just a count of pairs)
    * - animate/slow down reveal results
    * - end game when all removed
    * - enable restart w/ new sort order
@@ -15,6 +14,7 @@ function App() {
    */
 
   const [cardsStore, setCardsStore] = useState<cardData[]>(deckOfCards)
+  const [score, setScore] = useState(0)
 
   const trackCards = (card: cardData) => {
     if (card.status === "faceDown") {
@@ -47,6 +47,7 @@ function App() {
     ) {
       console.log("you got a match!")
       //TODO: add to score
+      setScore((score) => score + 1)
       setCardsStore(() => cardsStore.filter((card) => card.status !== "faceUp"))
     } else if (faceUpCards.length === 2) {
       // no match - return to face down
@@ -56,10 +57,13 @@ function App() {
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
-      <h1 className="flex items-center justify-center gap-2 text-2xl">
-        <i className="fa-solid fa-star" />
-        <div>MATCH!</div>
-      </h1>
+      <div className="flex w-full max-w-3xl justify-between">
+        <h1 className="flex items-center justify-center gap-2 text-3xl">
+          <i className="fa-solid fa-star" />
+          <div>MATCH!</div>
+        </h1>
+        <div className="text-2xl">{`Score: ${score}`}</div>
+      </div>
       <div className="flex w-full max-w-4xl flex-wrap justify-center gap-4">
         {cardsStore.map((card, idx) => {
           return (
