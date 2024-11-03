@@ -14,9 +14,10 @@ A simple memory game I built for my toddler.
 
 - [ ] shuffle cards when restarting
 - [ ] leave gaps when a match was found
-- [ ] add multiplayer (turns, scores)
+- [ ] add local multiplayer (turns, scores)
 
 ### NICE TO HAVE
 
+- [ ] allow players to enter names
 - [ ] generate cardData for better randomization
-- [ ] allow setting card count
+- [ ] allow players to set the card count
