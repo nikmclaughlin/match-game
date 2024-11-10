@@ -8,10 +8,6 @@ function App() {
    * - shuffle cards when restarting
    * - leave gaps when a match was found
    * - add multiplayer (turns, scores)
-   *
-   * NICE TO HAVE
-   * - generate cardData for better randomization
-   * - allow setting card count
    */
 
   const [cardsStore, setCardsStore] = useState<cardData[]>(deckOfCards)

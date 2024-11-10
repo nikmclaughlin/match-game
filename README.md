@@ -18,6 +18,8 @@ A simple memory game I built for my toddler.
 
 ### NICE TO HAVE
 
+- [ ] sound effects
+- [ ] animations
 - [ ] allow players to enter names
 - [ ] generate cardData for better randomization
 - [ ] allow players to set the card count
