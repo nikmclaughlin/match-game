@@ -9,7 +9,7 @@ export type MatchCardProps = {
 export const MatchCard = ({ card, onChange }: MatchCardProps) => {
   return (
     <div
-      className="h-56 w-44 cursor-pointer overflow-clip rounded-lg border-2 border-stone-600"
+      className="h-52 w-40 cursor-pointer overflow-clip rounded-lg border-2 border-stone-600"
       onClick={() => onChange(card)}
     >
       {card.status === "faceDown" ?

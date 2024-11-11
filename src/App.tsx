@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import { useCallback, useEffect, useState } from "react"
 import { MatchCard } from "./MatchCard"
 import { cardData, useDeckOfCards } from "./cardData"
@@ -5,13 +6,21 @@ import { cardData, useDeckOfCards } from "./cardData"
 function App() {
   /**
    * TODO
-   * - add multiplayer (turns, scores)
+   * - Improve handling for player state
+   *   - name
+   *   - score
+   *   - color
+   * - and game state
+   *   - turn
+   *   - state
+   *   - winner
    */
 
   const createDeck = useDeckOfCards()
-  const [cardsStore, setCardsStore] = useState<cardData[]>(createDeck())
+  const [cardsStore, setCardsStore] = useState(createDeck())
   const [isPlayer1sTurn, setIsPlayer1sTurn] = useState(true)
-  const [score, setScore] = useState(0)
+  const [p1Score, setP1Score] = useState(0)
+  const [p2Score, setP2Score] = useState(0)
   const [gameEnd, setGameEnd] = useState(false)
 
   const faceUpCards = cardsStore.filter((card) => card.status === "faceUp")
@@ -35,7 +44,11 @@ function App() {
   }
 
   const removeWinningCards = useCallback(() => {
-    setScore(score + 200)
+    if (isPlayer1sTurn) {
+      setP1Score(p1Score + 200)
+    } else {
+      setP2Score(p2Score + 200)
+    }
     setCardsStore(() =>
       cardsStore.map((card) => {
         if (card.status == "faceUp") {
@@ -45,7 +58,7 @@ function App() {
         return card
       }),
     )
-  }, [cardsStore, score])
+  }, [cardsStore, isPlayer1sTurn, p1Score, p2Score])
 
   const returnNoMatch = useCallback(() => {
     setCardsStore(
@@ -83,12 +96,31 @@ function App() {
   return (
     <div className="flex flex-col items-center gap-4 p-4">
       {gameEnd ?
-        <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-4 p-10">
-          <div className="animate-bounce text-5xl">🎉</div>
+        <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-8 p-10">
+          <div className="text-5xl">🎉</div>
+          <div className="flex flex-col items-center gap-8">
+            <div
+              className={clsx(
+                "rounded-full p-4 text-2xl",
+                p1Score >= p2Score ?
+                  "animate-bounce bg-green-300 text-4xl text-green-800"
+                : "bg-red-200 opacity-50",
+              )}
+            >{`Player 1: ${p1Score}`}</div>
+            <div
+              className={clsx(
+                "rounded-full p-4 text-2xl",
+                p1Score <= p2Score ?
+                  "animate-bounce bg-green-300 text-4xl text-green-800"
+                : "bg-red-200 opacity-50",
+              )}
+            >{`Player 2: ${p2Score}`}</div>
+          </div>
           <button
             className="rounded-full bg-emerald-600 px-4 py-2 text-stone-100 hover:bg-emerald-700"
             onClick={() => {
-              setScore(0)
+              setP1Score(0)
+              setP2Score(0)
               setCardsStore(createDeck())
               setGameEnd(false)
             }}
@@ -98,14 +130,26 @@ function App() {
         </div>
       : <>
           <div className="flex w-full max-w-3xl justify-between">
-            <h1 className="flex items-center justify-center gap-2 text-3xl">
+            <h1 className="flex items-center justify-center gap-2 text-4xl">
               <i className="fa-solid fa-star" />
               <div>MATCH!</div>
             </h1>
-            <div>{`Current Player: ${isPlayer1sTurn ? "1" : "2"}`}</div>
-            <div className="text-2xl">{`Score: ${score}`}</div>
+            <div className="flex flex-col gap-2">
+              <div
+                className={clsx(
+                  "w-64 rounded-full py-2 pl-10 text-2xl",
+                  isPlayer1sTurn ? "bg-green-200" : "bg-transparent",
+                )}
+              >{`Player 1: ${p1Score}`}</div>
+              <div
+                className={clsx(
+                  "w-64 rounded-full py-2 pl-10 text-2xl",
+                  !isPlayer1sTurn ? "bg-green-200" : "bg-transparent",
+                )}
+              >{`Player 2: ${p2Score}`}</div>
+            </div>
           </div>
-          <div className="flex w-full max-w-4xl flex-wrap justify-center gap-4">
+          <div className="flex w-full max-w-3xl flex-wrap justify-center gap-4">
             {cardsStore.map((card, idx) => {
               return (
                 <MatchCard
