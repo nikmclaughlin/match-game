@@ -94,30 +94,30 @@ function App() {
   }, [countInPlay, setGameEnd])
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex h-screen flex-col items-center gap-4 bg-stone-800 p-4 text-stone-300">
       {gameEnd ?
         <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-8 p-10">
           <div className="text-5xl">🎉</div>
-          <div className="flex flex-col items-center gap-8">
+          <div className="flex flex-col items-center gap-8 text-2xl">
             <div
               className={clsx(
-                "rounded-full p-4 text-2xl",
+                "rounded-full p-4",
                 p1Score >= p2Score ?
                   "animate-bounce bg-green-300 text-4xl text-green-800"
-                : "bg-red-200 opacity-50",
+                : "bg-red-800 opacity-50",
               )}
             >{`Player 1: ${p1Score}`}</div>
             <div
               className={clsx(
-                "rounded-full p-4 text-2xl",
+                "rounded-full p-4",
                 p1Score <= p2Score ?
                   "animate-bounce bg-green-300 text-4xl text-green-800"
-                : "bg-red-200 opacity-50",
+                : "bg-red-800 opacity-50",
               )}
             >{`Player 2: ${p2Score}`}</div>
           </div>
           <button
-            className="rounded-full bg-emerald-600 px-4 py-2 text-stone-100 hover:bg-emerald-700"
+            className="group flex items-center gap-2 rounded-full bg-cyan-600 px-4 py-2 text-2xl text-stone-100 hover:bg-cyan-700"
             onClick={() => {
               setP1Score(0)
               setP2Score(0)
@@ -125,6 +125,7 @@ function App() {
               setGameEnd(false)
             }}
           >
+            <i className="fa-solid fa-refresh transition-all group-hover:rotate-45"></i>
             Play again
           </button>
         </div>
@@ -138,13 +139,17 @@ function App() {
               <div
                 className={clsx(
                   "w-64 rounded-full py-2 pl-10 text-2xl",
-                  isPlayer1sTurn ? "bg-green-200" : "bg-transparent",
+                  isPlayer1sTurn ?
+                    "bg-emerald-200 text-emerald-700"
+                  : "bg-transparent",
                 )}
               >{`Player 1: ${p1Score}`}</div>
               <div
                 className={clsx(
                   "w-64 rounded-full py-2 pl-10 text-2xl",
-                  !isPlayer1sTurn ? "bg-green-200" : "bg-transparent",
+                  !isPlayer1sTurn ?
+                    "bg-emerald-200 text-emerald-700"
+                  : "bg-transparent",
                 )}
               >{`Player 2: ${p2Score}`}</div>
             </div>
