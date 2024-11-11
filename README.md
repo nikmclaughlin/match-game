@@ -12,7 +12,7 @@ A simple memory game I built for my toddler.
 
 ## TODO
 
-- [ ] shuffle cards when restarting
+- [x] shuffle cards when restarting
 - [ ] leave gaps when a match was found
 - [ ] add local multiplayer (turns, scores)
 

@@ -59,9 +59,15 @@ const singleCards: cardData[] = [
 ]
 
 // create pairs, shuffle, and tag with id
-export const deckOfCards = singleCards
-  .concat(singleCards)
-  .map((value) => ({ value, sort: Math.random() }))
-  .sort((a, b) => a.sort - b.sort)
-  .map(({ value }) => value)
-  .map((card, idx) => ({ ...card, id: idx }))
+export const createDeck = (singleCards: cardData[]) => {
+  return singleCards
+    .concat(singleCards) // duplicate single cards
+    .map((value) => ({ value, sort: Math.random() })) // Schwartizan Transform 1: decorate
+    .sort((a, b) => a.sort - b.sort) // 2: sort
+    .map(({ value }) => value) // 3: undecorate
+    .map((card, idx) => ({ ...card, id: idx })) // add id for ease of reference
+}
+
+export const useDeckOfCards = () => {
+  return () => createDeck(singleCards)
+}

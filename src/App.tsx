@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { MatchCard } from "./MatchCard"
-import { cardData, deckOfCards } from "./cardData"
+import { cardData, useDeckOfCards } from "./cardData"
 
 function App() {
   /**
@@ -10,7 +10,8 @@ function App() {
    * - add multiplayer (turns, scores)
    */
 
-  const [cardsStore, setCardsStore] = useState<cardData[]>(deckOfCards)
+  const createDeck = useDeckOfCards()
+  const [cardsStore, setCardsStore] = useState<cardData[]>(createDeck())
   const [score, setScore] = useState(0)
   const [gameEnd, setGameEnd] = useState(false)
 
@@ -79,7 +80,7 @@ function App() {
             className="rounded-full bg-emerald-600 px-4 py-2 text-stone-100 hover:bg-emerald-700"
             onClick={() => {
               setScore(0)
-              setCardsStore(deckOfCards)
+              setCardsStore(createDeck())
               setGameEnd(false)
             }}
           >
