@@ -10,6 +10,7 @@ function App() {
 
   const createDeck = useDeckOfCards()
   const [cardsStore, setCardsStore] = useState<cardData[]>(createDeck())
+  const [isPlayer1sTurn, setIsPlayer1sTurn] = useState(true)
   const [score, setScore] = useState(0)
   const [gameEnd, setGameEnd] = useState(false)
 
@@ -25,15 +26,6 @@ function App() {
         const nextCardStore = cardsStore.map((c) => {
           if (c.id === card.id) {
             c.status = "faceUp"
-          }
-          return c
-        })
-        setCardsStore(nextCardStore)
-      } else if (card.status === "faceUp") {
-        console.log("hiding " + card.name)
-        const nextCardStore = cardsStore.map((c) => {
-          if (c.id === card.id) {
-            c.status = "faceDown"
           }
           return c
         })
@@ -64,7 +56,8 @@ function App() {
         return card
       }),
     )
-  }, [cardsStore])
+    setIsPlayer1sTurn(!isPlayer1sTurn)
+  }, [cardsStore, isPlayer1sTurn])
 
   // check for matches
   useEffect(() => {
@@ -84,7 +77,6 @@ function App() {
   useEffect(() => {
     if (countInPlay === 0) {
       setTimeout(() => setGameEnd(true), 500)
-      // setGameEnd(true)
     }
   }, [countInPlay, setGameEnd])
 
@@ -110,6 +102,7 @@ function App() {
               <i className="fa-solid fa-star" />
               <div>MATCH!</div>
             </h1>
+            <div>{`Current Player: ${isPlayer1sTurn ? "1" : "2"}`}</div>
             <div className="text-2xl">{`Score: ${score}`}</div>
           </div>
           <div className="flex w-full max-w-4xl flex-wrap justify-center gap-4">
