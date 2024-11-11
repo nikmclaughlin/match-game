@@ -16,7 +16,7 @@ export const Front = (props: cardDisplayProps) => {
         bgColor ?? "bg-stone-100",
       )}
     >
-      <i className={clsx("fa-solid text-8xl", icon, color)} />
+      <i className={clsx("fa-solid text-5xl sm:text-8xl", icon, color)} />
     </div>
   )
 }

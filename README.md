@@ -18,8 +18,7 @@ A simple memory game I built for my toddler.
 - [x] leave gaps when a match was found
 - [x] add local multiplayer (turns, scores)
 - [x] deploy
-- [ ] responsive styles
-- [ ] touch controls
+- [x] responsive styles
 
 ### NICE TO HAVE
 

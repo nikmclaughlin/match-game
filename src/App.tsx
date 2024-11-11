@@ -115,7 +115,7 @@ function App() {
               className={clsx(
                 "rounded-full p-4",
                 p1Score >= p2Score ?
-                  "animate-bounce bg-green-300 text-4xl text-green-800"
+                  "animate-bounce bg-green-300 text-3xl text-green-800 sm:text-4xl"
                 : "bg-red-800 opacity-50",
               )}
             >{`Player 1: ${p1Score}`}</div>
@@ -123,7 +123,7 @@ function App() {
               className={clsx(
                 "rounded-full p-4",
                 p1Score <= p2Score ?
-                  "animate-bounce bg-green-300 text-4xl text-green-800"
+                  "animate-bounce bg-green-300 text-3xl text-green-800 sm:text-4xl"
                 : "bg-red-800 opacity-50",
               )}
             >{`Player 2: ${p2Score}`}</div>
@@ -143,15 +143,15 @@ function App() {
           </button>
         </div>
       : <>
-          <div className="flex w-full max-w-3xl justify-between">
-            <h1 className="flex items-center justify-center gap-2 text-4xl">
+          <div className="flex w-full max-w-xl justify-between sm:max-w-3xl">
+            <h1 className="flex items-center justify-center gap-2 text-2xl sm:text-4xl">
               <i className="fa-solid fa-star text-red-400" />
               <div>MATCH!</div>
             </h1>
             <div className="flex flex-col gap-2">
               <div
                 className={clsx(
-                  "w-64 rounded-full py-2 pl-10 text-2xl",
+                  "w-48 rounded-full py-2 pl-10 text-lg sm:w-64 sm:text-2xl",
                   isPlayer1sTurn ?
                     "bg-emerald-200 text-emerald-700"
                   : "bg-transparent",
@@ -159,7 +159,7 @@ function App() {
               >{`Player 1: ${p1Score}`}</div>
               <div
                 className={clsx(
-                  "w-64 rounded-full py-2 pl-10 text-2xl",
+                  "w-48 rounded-full py-2 pl-10 text-lg sm:w-64 sm:text-2xl",
                   !isPlayer1sTurn ?
                     "bg-emerald-200 text-emerald-700"
                   : "bg-transparent",
