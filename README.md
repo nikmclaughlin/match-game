@@ -1,4 +1,4 @@
-# Match Game
+# Red Star Match Game
 
 A simple memory game I built for my toddler.
 

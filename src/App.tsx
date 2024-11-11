@@ -145,7 +145,7 @@ function App() {
       : <>
           <div className="flex w-full max-w-3xl justify-between">
             <h1 className="flex items-center justify-center gap-2 text-4xl">
-              <i className="fa-solid fa-star" />
+              <i className="fa-solid fa-star text-red-400" />
               <div>MATCH!</div>
             </h1>
             <div className="flex flex-col gap-2">
