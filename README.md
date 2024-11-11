@@ -16,6 +16,9 @@ A simple memory game I built for my toddler.
 - [x] shuffle cards when restarting
 - [x] leave gaps when a match was found
 - [x] add local multiplayer (turns, scores)
+- [ ] deploy
+- [ ] responsive styles
+- [ ] touch controls
 
 ### NICE TO HAVE
 
