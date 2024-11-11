@@ -1,5 +1,6 @@
 import clsx from "clsx"
 import { useCallback, useEffect, useState } from "react"
+import useSound from "use-sound"
 import { MatchCard } from "./MatchCard"
 import { cardData, useDeckOfCards } from "./cardData"
 
@@ -23,6 +24,12 @@ function App() {
   const [p2Score, setP2Score] = useState(0)
   const [gameEnd, setGameEnd] = useState(false)
 
+  const [playCardHide] = useSound("/cardHide.mp3")
+  const [playCardReveal] = useSound("/cardReveal.mp3")
+  const [playScore] = useSound("/score.mp3")
+  const [playWinner] = useSound("/winner.mp3")
+  const [playShuffle] = useSound("/shuffle.mp3")
+
   const faceUpCards = cardsStore.filter((card) => card.status === "faceUp")
   const countInPlay = cardsStore.filter(
     (card) => card.status !== "removed",
@@ -32,6 +39,7 @@ function App() {
     if (faceUpCards.length < 2) {
       if (card.status === "faceDown") {
         console.log("found a " + card.name)
+        playCardReveal()
         const nextCardStore = cardsStore.map((c) => {
           if (c.id === card.id) {
             c.status = "faceUp"
@@ -61,6 +69,7 @@ function App() {
   }, [cardsStore, isPlayer1sTurn, p1Score, p2Score])
 
   const returnNoMatch = useCallback(() => {
+    playCardHide()
     setCardsStore(
       cardsStore.map((card) => {
         if (card.status === "faceUp") {
@@ -69,8 +78,9 @@ function App() {
         return card
       }),
     )
+    playCardHide()
     setIsPlayer1sTurn(!isPlayer1sTurn)
-  }, [cardsStore, isPlayer1sTurn])
+  }, [cardsStore, isPlayer1sTurn, playCardHide])
 
   // check for matches
   useEffect(() => {
@@ -79,19 +89,21 @@ function App() {
       faceUpCards[0].name === faceUpCards[1].name
     ) {
       console.log("you got a match!")
+      playScore()
       setTimeout(removeWinningCards, 500)
     } else if (faceUpCards.length === 2) {
       // no match - return to face down
       setTimeout(returnNoMatch, 500)
     }
-  }, [faceUpCards, removeWinningCards, returnNoMatch])
+  }, [faceUpCards, playScore, removeWinningCards, returnNoMatch])
 
   // game end state
   useEffect(() => {
     if (countInPlay === 0) {
       setTimeout(() => setGameEnd(true), 500)
+      playWinner()
     }
-  }, [countInPlay, setGameEnd])
+  }, [countInPlay, playWinner, setGameEnd])
 
   return (
     <div className="flex h-screen flex-col items-center gap-4 bg-stone-800 p-4 text-stone-300">
@@ -122,6 +134,7 @@ function App() {
               setP1Score(0)
               setP2Score(0)
               setCardsStore(createDeck())
+              playShuffle()
               setGameEnd(false)
             }}
           >

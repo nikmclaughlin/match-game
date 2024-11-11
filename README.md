@@ -9,6 +9,7 @@ A simple memory game I built for my toddler.
 - TypeScript
 - Tailwind
 - FontAwesome icons
+- Josh Comeau's `useSound` hook
 
 ## TODO
 
@@ -18,8 +19,15 @@ A simple memory game I built for my toddler.
 
 ### NICE TO HAVE
 
-- [ ] sound effects
+- [x] sound effects
+- [ ] start menu
+- [ ] allow players to enter names, colors
 - [ ] animations
-- [ ] allow players to enter names
 - [ ] generate cardData for better randomization
-- [ ] allow players to set the card count
+- [ ] allow players to set the card count, number of players
+
+### Resources
+
+Card Flip by f4ngy -- https://freesound.org/s/240776/ -- License: Attribution 4.0
+Simple Clean Logo & Announcement Sound 4 by SergeQuadrado -- https://freesound.org/s/567204/ -- License: Attribution NonCommercial 3.0
+Shuffling Cards.wav by jimbo555 -- https://freesound.org/s/630498/ -- License: Creative Commons 0
