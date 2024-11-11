@@ -4,6 +4,7 @@ export type cardData = {
   icon: string
   color: string
   status: "faceDown" | "faceUp" | "removed"
+  bgColor?: string
 }
 
 // TODO: make this a function that generates an array of unique cards

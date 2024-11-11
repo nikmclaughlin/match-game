@@ -5,8 +5,6 @@ import { cardData, useDeckOfCards } from "./cardData"
 function App() {
   /**
    * TODO
-   * - shuffle cards when restarting
-   * - leave gaps when a match was found
    * - add multiplayer (turns, scores)
    */
 
@@ -16,6 +14,9 @@ function App() {
   const [gameEnd, setGameEnd] = useState(false)
 
   const faceUpCards = cardsStore.filter((card) => card.status === "faceUp")
+  const countInPlay = cardsStore.filter(
+    (card) => card.status !== "removed",
+  ).length
 
   const trackCards = (card: cardData) => {
     if (faceUpCards.length < 2) {
@@ -28,7 +29,7 @@ function App() {
           return c
         })
         setCardsStore(nextCardStore)
-      } else {
+      } else if (card.status === "faceUp") {
         console.log("hiding " + card.name)
         const nextCardStore = cardsStore.map((c) => {
           if (c.id === card.id) {
@@ -43,11 +44,26 @@ function App() {
 
   const removeWinningCards = useCallback(() => {
     setScore(score + 200)
-    setCardsStore(() => cardsStore.filter((card) => card.status !== "faceUp"))
+    setCardsStore(() =>
+      cardsStore.map((card) => {
+        if (card.status == "faceUp") {
+          card.bgColor = "bg-green-200 opacity-50"
+          card.status = "removed"
+        }
+        return card
+      }),
+    )
   }, [cardsStore, score])
 
   const returnNoMatch = useCallback(() => {
-    setCardsStore(cardsStore.map((card) => ({ ...card, status: "faceDown" })))
+    setCardsStore(
+      cardsStore.map((card) => {
+        if (card.status === "faceUp") {
+          card.status = "faceDown"
+        }
+        return card
+      }),
+    )
   }, [cardsStore])
 
   // check for matches
@@ -66,10 +82,11 @@ function App() {
 
   // game end state
   useEffect(() => {
-    if (cardsStore.length == 0) {
-      setGameEnd(true)
+    if (countInPlay === 0) {
+      setTimeout(() => setGameEnd(true), 500)
+      // setGameEnd(true)
     }
-  }, [cardsStore.length, setGameEnd])
+  }, [countInPlay, setGameEnd])
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
