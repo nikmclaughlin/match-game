@@ -6,18 +6,6 @@ import { MainGame } from "./pages/MainGame.tsx"
 import { StartMenu } from "./pages/StartMenu.tsx"
 
 function App() {
-  /**
-   * TODO
-   * - Improve handling for player state
-   *   - name
-   *   - score
-   *   - color
-   * - and game state
-   *   - turn
-   *   - state
-   *   - winner
-   */
-
   return (
     <GameProvider>
       <div className="flex h-screen flex-col items-center gap-4 bg-stone-800 p-4 text-stone-300">

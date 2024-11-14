@@ -82,6 +82,7 @@ export const MainGame = () => {
   // game end state
   useEffect(() => {
     if (countInPlay === 0) {
+      // TODO: figure out why this is triggering twice?
       setTimeout(() => updateGameState("end"), 500)
       playWinner()
     }
