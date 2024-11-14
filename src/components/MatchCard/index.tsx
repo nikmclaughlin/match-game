@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import { cardData } from "../cardData"
+import { cardData } from "../../cardData"
 import { Front } from "./Front"
 
 export type MatchCardProps = {
