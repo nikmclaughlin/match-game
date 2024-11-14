@@ -1,19 +1,15 @@
 import clsx from "clsx"
-import { useCallback, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useCallback, useContext, useEffect, useState } from "react"
 import useSound from "use-sound"
 import { cardData, useDeckOfCards } from "../cardData"
 import { MatchCard } from "../components/MatchCard"
+import { GameContext, GameContextType } from "../contexts/GameContext"
 
 export const MainGame = () => {
   const createDeck = useDeckOfCards()
+  const { updateGameState, players, activePlayer, nextActivePlayer } =
+    useContext(GameContext) as GameContextType
   const [cardsStore, setCardsStore] = useState(createDeck())
-  const [isPlayer1sTurn, setIsPlayer1sTurn] = useState(true)
-  const [p1Score, setP1Score] = useState(0)
-  const [p2Score, setP2Score] = useState(0)
-  const [gameEnd, setGameEnd] = useState(false)
-
-  const navigate = useNavigate()
 
   const [playCardHide] = useSound("/cardHide.mp3")
   const [playCardReveal] = useSound("/cardReveal.mp3")
@@ -42,11 +38,7 @@ export const MainGame = () => {
   }
 
   const removeWinningCards = useCallback(() => {
-    if (isPlayer1sTurn) {
-      setP1Score(p1Score + 200)
-    } else {
-      setP2Score(p2Score + 200)
-    }
+    players[activePlayer].score += 200
     setCardsStore(() =>
       cardsStore.map((card) => {
         if (card.status == "faceUp") {
@@ -56,7 +48,7 @@ export const MainGame = () => {
         return card
       }),
     )
-  }, [cardsStore, isPlayer1sTurn, p1Score, p2Score])
+  }, [activePlayer, cardsStore, players])
 
   const returnNoMatch = useCallback(() => {
     playCardHide()
@@ -69,8 +61,8 @@ export const MainGame = () => {
       }),
     )
     playCardHide()
-    setIsPlayer1sTurn(!isPlayer1sTurn)
-  }, [cardsStore, isPlayer1sTurn, playCardHide])
+    nextActivePlayer()
+  }, [cardsStore, nextActivePlayer, playCardHide])
 
   // check for matches
   useEffect(() => {
@@ -90,16 +82,10 @@ export const MainGame = () => {
   // game end state
   useEffect(() => {
     if (countInPlay === 0) {
-      setTimeout(() => setGameEnd(true), 500)
+      setTimeout(() => updateGameState("end"), 500)
       playWinner()
     }
-  }, [countInPlay, playWinner, setGameEnd])
-
-  useEffect(() => {
-    if (gameEnd === true) {
-      navigate("/end")
-    }
-  }, [gameEnd, navigate])
+  }, [countInPlay, playWinner, updateGameState])
 
   return (
     <>
@@ -109,22 +95,22 @@ export const MainGame = () => {
           <div>MATCH!</div>
         </h1>
         <div className="flex flex-col gap-2">
-          <div
-            className={clsx(
-              "w-48 rounded-full py-2 pl-10 text-lg sm:w-64 sm:text-2xl",
-              isPlayer1sTurn ?
-                "bg-emerald-200 text-emerald-700"
-              : "bg-transparent",
-            )}
-          >{`Player 1: ${p1Score}`}</div>
-          <div
-            className={clsx(
-              "w-48 rounded-full py-2 pl-10 text-lg sm:w-64 sm:text-2xl",
-              !isPlayer1sTurn ?
-                "bg-emerald-200 text-emerald-700"
-              : "bg-transparent",
-            )}
-          >{`Player 2: ${p2Score}`}</div>
+          {players.map((player, idx) => {
+            return (
+              <div key={idx}>
+                <div
+                  className={clsx(
+                    "w-48 rounded-full py-2 pl-10 text-lg sm:w-64 sm:text-2xl",
+                    idx === activePlayer ?
+                      "bg-emerald-200 text-emerald-700"
+                    : "bg-transparent",
+                  )}
+                >
+                  {player.name}: {player.score}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
       <div className="flex w-full max-w-3xl flex-wrap justify-center gap-4">
