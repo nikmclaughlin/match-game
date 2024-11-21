@@ -1,6 +1,6 @@
 import { createContext, FC, ReactNode, useState } from "react"
 
-export type PlayerColors =
+export type PlayerColorsType =
   | "emerald"
   | "red"
   | "violet"
@@ -10,17 +10,17 @@ export type PlayerColors =
   | "fuchsia"
   | "lime"
 
-type Player = {
+export type PlayerType = {
   name: string
-  color: PlayerColors
+  color: PlayerColorsType
   score: number
 }
 
 export type GameContextType = {
   gameState: "pre" | "active" | "end"
-  players: Player[]
+  players: PlayerType[]
   activePlayer: number
-  updatePlayers: (players: Player[]) => void
+  updatePlayers: (players: PlayerType[]) => void
   nextActivePlayer: () => void
   updateGameState: (newState: GameContextType["gameState"]) => void
 }
@@ -31,7 +31,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [gameState, setGameState] =
     useState<GameContextType["gameState"]>("pre")
   const [activePlayer, setActivePlayer] = useState(0)
-  const [players, setPlayers] = useState<Player[]>([
+  const [players, setPlayers] = useState<PlayerType[]>([
     {
       name: "player 1",
       color: "emerald",
@@ -43,7 +43,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
       score: 0,
     },
   ])
-  const updatePlayers = (players: Player[]) => {
+  const updatePlayers = (players: PlayerType[]) => {
     setPlayers(players)
   }
   const nextActivePlayer = () => {
