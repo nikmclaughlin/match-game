@@ -1,8 +1,18 @@
 import { createContext, FC, ReactNode, useState } from "react"
 
+export type PlayerColors =
+  | "emerald"
+  | "red"
+  | "violet"
+  | "blue"
+  | "yellow"
+  | "cyan"
+  | "fuchsia"
+  | "lime"
+
 type Player = {
   name: string
-  color: string
+  color: PlayerColors
   score: number
 }
 

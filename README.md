@@ -23,7 +23,7 @@ A simple memory game I built for my toddler.
 ### NICE TO HAVE
 
 - [x] sound effects
-- [ ] start menu
+- [x] start menu
 - [ ] allow players to enter names, colors
 - [ ] animations
 - [ ] generate cardData for better randomization
