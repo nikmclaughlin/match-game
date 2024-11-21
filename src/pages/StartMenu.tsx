@@ -6,6 +6,8 @@ import {
   PlayerColors,
 } from "../contexts/GameContext"
 
+import useSound from "use-sound"
+
 const PLAYER_COLORS = [
   "emerald",
   "red",
@@ -99,6 +101,7 @@ export const StartMenu = () => {
   const { updateGameState, players } = useContext(
     GameContext,
   ) as GameContextType
+  const [playShuffle] = useSound("/shuffle.mp3")
   const [selectedColorIndex, setSelectedColorIndex] = useState(0)
 
   useEffect(() => {
@@ -107,7 +110,7 @@ export const StartMenu = () => {
 
   return (
     <div className="flex flex-col items-center gap-10 p-20">
-      <i className="fa-solid fa-star motion-safe:animate-spin-slow text-9xl text-red-400"></i>
+      <i className="fa-solid fa-star text-9xl text-red-400 motion-safe:animate-spin-slow"></i>
       <div className="flex gap-10">
         <div className="flex flex-col gap-4 rounded-xl border border-stone-300 p-6">
           <div className="text-2xl">Player 1</div>
@@ -136,8 +139,9 @@ export const StartMenu = () => {
         <div>Form2</div>
       </div>
       <button
-        className="rounded-full bg-emerald-600 p-4 text-4xl"
+        className="rounded-full bg-emerald-600 p-4 text-4xl hover:bg-emerald-800"
         onClick={() => {
+          playShuffle()
           updateGameState("active")
         }}
       >
