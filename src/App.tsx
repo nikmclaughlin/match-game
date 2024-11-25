@@ -8,7 +8,7 @@ import { StartMenu } from "./pages/StartMenu.tsx"
 function App() {
   return (
     <GameProvider>
-      <div className="flex h-screen flex-col items-center gap-4 bg-stone-800 p-4 text-stone-300">
+      <div className="flex h-full flex-col items-center gap-4 bg-stone-800 p-4 text-stone-300">
         <BrowserRouter>
           <GameStateRouter>
             <Routes>
