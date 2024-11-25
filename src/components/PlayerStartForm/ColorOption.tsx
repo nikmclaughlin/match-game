@@ -1,54 +1,5 @@
 import clsx from "clsx"
-import { PlayerColorsType } from "../../contexts/GameContext"
-
-type ColorOptionType = {
-  name: PlayerColorsType
-  bg: string
-  border: string
-}
-
-const COLOR_OPTIONS: ColorOptionType[] = [
-  {
-    name: "emerald",
-    bg: "bg-emerald-400",
-    border: "border-emerald-200",
-  },
-  {
-    name: "red",
-    bg: "bg-red-400",
-    border: "border-red-200",
-  },
-  {
-    name: "violet",
-    bg: "bg-violet-400",
-    border: "border-violet-200",
-  },
-  {
-    name: "blue",
-    bg: "bg-blue-400",
-    border: "border-emerald-200",
-  },
-  {
-    name: "yellow",
-    bg: "bg-yellow-400",
-    border: "border-yellow-200",
-  },
-  {
-    name: "cyan",
-    bg: "bg-cyan-400",
-    border: "border-cyan-200",
-  },
-  {
-    name: "fuchsia",
-    bg: "bg-fuchsia-400",
-    border: "border-fuchsia-200",
-  },
-  {
-    name: "lime",
-    bg: "bg-lime-400",
-    border: "border-lime-200",
-  },
-]
+import { COLOR_OPTIONS } from "../../services/colorService"
 
 export const ColorOption = (props: {
   color: string

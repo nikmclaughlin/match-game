@@ -10,10 +10,6 @@ export const StartMenu = () => {
   ) as GameContextType
   const [playShuffle] = useSound("/shuffle.mp3")
 
-  // useEffect(() => {
-  //   players[0].color = COLOR_OPTIONS[selectedColorIndex].name
-  // }, [players, selectedColorIndex])
-
   return (
     <div className="flex flex-col items-center gap-10 p-20">
       <i className="fa-solid fa-star text-9xl text-red-400 motion-safe:animate-spin-slow"></i>

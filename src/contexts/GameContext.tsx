@@ -1,18 +1,9 @@
 import { createContext, FC, ReactNode, useState } from "react"
-
-export type PlayerColorsType =
-  | "emerald"
-  | "red"
-  | "violet"
-  | "blue"
-  | "yellow"
-  | "cyan"
-  | "fuchsia"
-  | "lime"
+import { COLOR_OPTIONS, ColorOptionType } from "../services/colorService"
 
 export type PlayerType = {
   name: string
-  color: PlayerColorsType
+  color: ColorOptionType
   score: number
 }
 
@@ -38,12 +29,12 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [players, setPlayers] = useState<PlayerType[]>([
     {
       name: "player 1",
-      color: "emerald",
+      color: COLOR_OPTIONS[0],
       score: 0,
     },
     {
       name: "player 2",
-      color: "yellow",
+      color: COLOR_OPTIONS[1],
       score: 0,
     },
   ])

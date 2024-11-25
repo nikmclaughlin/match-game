@@ -23,9 +23,10 @@ export const EndScreen = () => {
               key={idx}
               className={clsx(
                 "rounded-full p-4 shadow-lg",
+                [player.color.bg, player.color.text],
                 winningScore === player.score ?
-                  "animate-bounce bg-green-300 text-3xl text-green-800 sm:text-4xl"
-                : "bg-red-800 opacity-50",
+                  "animate-bounce text-3xl sm:text-4xl"
+                : "opacity-50",
               )}
             >
               {player.name}: {player.score}

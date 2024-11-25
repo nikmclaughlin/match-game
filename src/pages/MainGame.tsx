@@ -42,7 +42,7 @@ export const MainGame = () => {
     setCardsStore(() =>
       cardsStore.map((card) => {
         if (card.status == "faceUp") {
-          card.bgColor = "bg-green-200 opacity-50"
+          card.bgColor = clsx(players[activePlayer].color.bg, "opacity-75")
           card.status = "removed"
         }
         return card
@@ -103,7 +103,7 @@ export const MainGame = () => {
                   className={clsx(
                     "w-48 rounded-full py-2 pl-10 text-lg sm:w-64 sm:text-2xl",
                     idx === activePlayer ?
-                      "bg-emerald-200 text-emerald-700"
+                      [player.color.bg, player.color.text]
                     : "bg-transparent",
                   )}
                 >

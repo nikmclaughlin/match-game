@@ -2,21 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import {
   GameContext,
   GameContextType,
-  PlayerColorsType,
   PlayerType,
 } from "../../contexts/GameContext"
+import { COLOR_OPTIONS } from "../../services/colorService"
 import { ColorOption } from "./ColorOption"
-
-const PLAYER_COLORS: PlayerColorsType[] = [
-  "emerald",
-  "red",
-  "violet",
-  "blue",
-  "yellow",
-  "cyan",
-  "fuchsia",
-  "lime",
-]
 
 export const PlayerStartForm = (props: {
   player: PlayerType
@@ -25,7 +14,9 @@ export const PlayerStartForm = (props: {
   const { player, formNumber } = props
   const { updatePlayerByNumber } = useContext(GameContext) as GameContextType
   const [playerName, setPlayerName] = useState(player.name || "")
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0)
+  const [selectedColorIndex, setSelectedColorIndex] = useState(
+    COLOR_OPTIONS.indexOf(player.color),
+  )
 
   useEffect(() => {
     updatePlayerByNumber(formNumber, { key: "name", value: playerName })
@@ -34,7 +25,7 @@ export const PlayerStartForm = (props: {
   useEffect(() => {
     updatePlayerByNumber(formNumber, {
       key: "color",
-      value: PLAYER_COLORS[selectedColorIndex],
+      value: COLOR_OPTIONS[selectedColorIndex],
     })
   }, [formNumber, selectedColorIndex, updatePlayerByNumber])
 
@@ -57,10 +48,10 @@ export const PlayerStartForm = (props: {
           className="flex flex-wrap gap-2"
           id="playerColor"
         >
-          {PLAYER_COLORS.map((playerColor, idx) => (
+          {COLOR_OPTIONS.map((color, idx) => (
             <ColorOption
-              key={playerColor}
-              color={playerColor}
+              key={color.name}
+              color={color.name}
               index={idx}
               selectedColorIndex={selectedColorIndex}
               setSelectedColorIndex={setSelectedColorIndex}
