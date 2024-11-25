@@ -1,12 +1,13 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import {
   GameContext,
   GameContextType,
+  PlayerColorsType,
   PlayerType,
 } from "../../contexts/GameContext"
 import { ColorOption } from "./ColorOption"
 
-const PLAYER_COLORS = [
+const PLAYER_COLORS: PlayerColorsType[] = [
   "emerald",
   "red",
   "violet",
@@ -17,16 +18,29 @@ const PLAYER_COLORS = [
   "lime",
 ]
 
-export const PlayerStartForm = (player: PlayerType) => {
-  const { updatePlayers } = useContext(GameContext) as GameContextType
-  const [playerName, setPlayerName] = useState(player.name)
+export const PlayerStartForm = (props: {
+  player: PlayerType
+  formNumber: number
+}) => {
+  const { player, formNumber } = props
+  const { updatePlayerByNumber } = useContext(GameContext) as GameContextType
+  const [playerName, setPlayerName] = useState(player.name || "")
   const [selectedColorIndex, setSelectedColorIndex] = useState(0)
 
-  //   TODO: Player update logic to change state in context to match local form state
+  useEffect(() => {
+    updatePlayerByNumber(formNumber, { key: "name", value: playerName })
+  }, [formNumber, playerName, updatePlayerByNumber])
+
+  useEffect(() => {
+    updatePlayerByNumber(formNumber, {
+      key: "color",
+      value: PLAYER_COLORS[selectedColorIndex],
+    })
+  }, [formNumber, selectedColorIndex, updatePlayerByNumber])
 
   return (
     <div className="flex flex-col gap-4 rounded-xl border border-stone-300 p-6">
-      <div className="text-2xl">{playerName || "Settings"}</div>
+      <div className="text-2xl">{playerName || `Player ${formNumber + 1}`}</div>
       <div className="flex gap-2">
         <label htmlFor="playerName">Name</label>
         <input
@@ -45,6 +59,7 @@ export const PlayerStartForm = (player: PlayerType) => {
         >
           {PLAYER_COLORS.map((playerColor, idx) => (
             <ColorOption
+              key={playerColor}
               color={playerColor}
               index={idx}
               selectedColorIndex={selectedColorIndex}

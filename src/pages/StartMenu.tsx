@@ -21,6 +21,7 @@ export const StartMenu = () => {
         {players.map((player, idx) => (
           <PlayerStartForm
             player={player}
+            formNumber={idx}
             key={idx}
           />
         ))}

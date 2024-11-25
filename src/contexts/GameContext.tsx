@@ -21,6 +21,10 @@ export type GameContextType = {
   players: PlayerType[]
   activePlayer: number
   updatePlayers: (players: PlayerType[]) => void
+  updatePlayerByNumber: <K extends keyof PlayerType>(
+    playerNumber: number,
+    newProp: { key: K; value: PlayerType[K] },
+  ) => void
   nextActivePlayer: () => void
   updateGameState: (newState: GameContextType["gameState"]) => void
 }
@@ -46,6 +50,15 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const updatePlayers = (players: PlayerType[]) => {
     setPlayers(players)
   }
+
+  const updatePlayerByNumber = <K extends keyof PlayerType>(
+    playerNumber: number,
+    newProp: { key: K; value: PlayerType[K] },
+  ) => {
+    const newPlayers = players
+    newPlayers[playerNumber][newProp.key] = newProp.value
+  }
+
   const nextActivePlayer = () => {
     setActivePlayer(activePlayer + 1 >= players.length ? 0 : activePlayer + 1)
   }
@@ -67,6 +80,7 @@ export const GameProvider: FC<{ children: ReactNode }> = ({ children }) => {
         players,
         activePlayer,
         updatePlayers,
+        updatePlayerByNumber,
         nextActivePlayer,
         updateGameState,
       }}
