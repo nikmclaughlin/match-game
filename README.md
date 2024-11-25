@@ -24,10 +24,9 @@ A simple memory game I built for my toddler.
 
 - [x] sound effects
 - [x] start menu
-- [ ] allow players to enter names, colors
-- [ ] animations
-- [ ] generate cardData for better randomization
+- [x] allow players to enter names, colors
 - [ ] allow players to set the card count, number of players
+- [ ] generate cardData for better randomization
 
 ### Resources
 
