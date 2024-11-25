@@ -13,7 +13,7 @@ export const StartMenu = () => {
   return (
     <div className="flex flex-col items-center gap-10 p-20">
       <i className="fa-solid fa-star text-9xl text-red-400 motion-safe:animate-spin-slow"></i>
-      <div className="flex gap-10">
+      <div className="flex flex-col gap-10 sm:flex-row">
         {players.map((player, idx) => (
           <PlayerStartForm
             player={player}
